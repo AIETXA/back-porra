@@ -13,3 +13,20 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int @id @default(autoincrement())
+  name      String
+  lastname  String
+  porras    Porra[]
+}
+
+model Porra {
+  id        Int @id @default(autoincrement())
+  nombre    String
+  userId    Int
+  user      User @relation(fields: [userId], references: [id])
+  dorsales  String[] //15
+  costo     Float    @default(30.0)
+  createdAt DateTime @default(now())
+}
