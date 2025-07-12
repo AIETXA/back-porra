@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  //output   = "../generated/prisma"
 }
 
 datasource db {
@@ -30,3 +30,14 @@ model Porra {
   costo     Float    @default(30.0)
   createdAt DateTime @default(now())
 }
+
+model Corredor {
+  id       Int    @id @default(autoincrement())
+  nombre   String
+  apellido String
+  dorsal   Int    @unique
+  equipo   String
+  pais     String
+  url      String
+}
+
