@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 const PORT = process.env.PORT || 3000;
+const rutasCorredores = require('./routes/rutaCorredores')
 
 dotenv.config()
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Empezando proyecto final')
 });
+app.use('/', rutasCorredores);
 
 app.listen(PORT,() => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`)

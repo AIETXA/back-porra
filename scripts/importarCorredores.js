@@ -4,7 +4,7 @@ const fs = require('fs');
 const prisma = new PrismaClient();
 
 async function main() {
-  const rawData = fs.readFileSync('./listaParticipantesTour.json', 'utf8');
+  const rawData = fs.readFileSync('.data/listaParticipantesTour.json', 'utf8');
   const datos = JSON.parse(rawData);
 
   for (const corredor of datos) {

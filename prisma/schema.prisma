@@ -18,17 +18,19 @@ model User {
   id        Int @id @default(autoincrement())
   name      String
   lastname  String
+  phone     String
   porras    Porra[]
 }
 
 model Porra {
-  id        Int @id @default(autoincrement())
-  nombre    String
-  userId    Int
-  user      User @relation(fields: [userId], references: [id])
-  dorsales  String[] //15
-  costo     Float    @default(30.0)
-  createdAt DateTime @default(now())
+  id            Int @id @default(autoincrement())
+  nombre        String
+  userId        Int
+  user          User @relation(fields: [userId], references: [id])
+  corredores    CorredorPorra[] //15
+  costo         Float    @default(30.0)
+  createdAt     DateTime @default(now())
+  puntosTotales Int             @default(0)
 }
 
 model Corredor {
@@ -36,8 +38,17 @@ model Corredor {
   nombre   String
   apellido String
   dorsal   Int    @unique
-  equipo   String
-  pais     String
+  porras   CorredorPorra[]
   url      String
 }
 
+model CorredorPorra {
+  id         Int      @id @default(autoincrement())
+  porra      Porra    @relation(fields: [porraId], references: [id])
+  porraId    Int
+  corredor   Corredor @relation(fields: [corredorId], references: [id])
+  corredorId Int
+  puntos     Int      @default(0)
+
+  @@unique([porraId, corredorId]) // para q no se dupliquen los corredores.
+}
