@@ -1,13 +1,10 @@
 const express = require('express');
-const routes = express.Router();
+const router = express.Router();
 const corredorController = require('../controllers/corredorController');
 
 
-routes.get('/', (req, res) => {
-    res.redirect('/');
-});
 
-routes.get('/corredores', corredorController.getAllCorredores);
+router.get('/corredores', corredorController.getAllCorredores);
+router.get('/corredorId', corredorController.getCorredorById);
 
-
-module.exports = routes 
+module.exports = router 

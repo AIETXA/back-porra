@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+
+const prisma = require('../config/prismaBBDD')
 
 const getAllCorredores = async(req, res) => {
     try {
@@ -14,6 +14,18 @@ const getAllCorredores = async(req, res) => {
 }
 }
 
+const getCorredorById = async(req, res) => {
+    try {
+        corredorId = await prisma.corredor.findUnique(id);
+        res.json(corredorId)
+
+    } catch(error) {
+        console.log(error)
+        res.status(500).send({message:'Error al intentar obtener corredor por ID'})
+    }
+}
+
 module.exports = {
-    getAllCorredores
+    getAllCorredores,
+    getCorredorById
 };

@@ -19,6 +19,7 @@ model User {
   name      String
   lastname  String
   phone     String
+  email     String @unique
   porras    Porra[]
 }
 
