@@ -6,7 +6,7 @@ async function enviarEmail(to, subject, html) {
      const resend = new Resend(process.env.RESEND_API_KEY)
      
      const { data, error } = await resend.emails.send({
-         from:"equipo@tuporra.com",
+         from:"",
          to,
          subject,
          html
@@ -20,6 +20,6 @@ async function enviarEmail(to, subject, html) {
     console.error('Error al enviar el correo:', error);
  }
 
-}
+};
 
 module.exports = { enviarEmail };

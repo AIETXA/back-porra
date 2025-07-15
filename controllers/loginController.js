@@ -9,7 +9,15 @@ async function login(req,res) {
         let user = await prisma.user.findUnique({ where: {email}});
 
     if(!user) {
-        user = await prisma.user.create({ data: {email} });
+        user = await prisma.user.create(
+            { data: {
+                email: email,
+                name: '',
+                lastname: '',
+                phone: '',
+            }
+        });
+        return res.status(200).json({ message: "Login exitoso", user });
     }
 
     const token = crypto.randomBytes(20).toString("hex")
@@ -30,8 +38,9 @@ async function login(req,res) {
         <p>El enlace expirará en 10 minuto</p>`;
 
     await enviarEmail(email, subject, html);
-        res.json({message:' Enlace enviado correctamente'})
+        return res.status(200).json({message:' Enlace enviado correctamente'})
     } catch (error) {
+        console.error(error)
         res.status(500).json({message: 'No se pudo enviar el enlace'})
     }
 }
