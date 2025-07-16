@@ -31,6 +31,7 @@ model Porra {
   user          User @relation(fields: [userId], references: [id])
   corredores    CorredorPorra[] //15
   costo         Float    @default(30.0)
+  pagada        Boolean  @default(false) 
   createdAt     DateTime @default(now())
   puntosTotales Int             @default(0)
 }

@@ -1,8 +1,4 @@
-//GET /porras — Obtener todas las porras del usuario logueado.
 
-//POST /porras — Crear una nueva porra.
-
-//PUT /porras/:id — Editar una porra existente.
 
 
 const prisma = require('../config/prismaBBDD')
@@ -14,7 +10,7 @@ async function obtenerPorra(req, res) {
             where: {usuarioId},
             include: {corredores: true}   
         });
-        req.json(porras)
+        res.json(porras)
 
     } catch (error) {
         console.error({message: 'No se pudo obtener la lista', error})
@@ -22,36 +18,41 @@ async function obtenerPorra(req, res) {
     
 };
 
-async function crearPorra(req, res){
+async function crearPorra(req, res) {
     try{
         const usuarioId = req.user.userId;
         const { nombre, dorsales } = req.body;
 
+        if(!nombre || typeof nombre !== 'string' || nombre.trim() === '') {
+            return res.status(400).send({message: 'El nombre de la lista es obligatorio'})
+        }
+
+        if(!Array.isArray(dorsales || dorsales.length !== 15 || !dorsales.every(d =>typeof d==='number')))
+            return res.status(400).send({message: 'Error al cargar los dorsales. Verifica que haya 15 dorsales tipo número'})
+        
+        const dorsalesDuplicados = new Set(dorsales).size !==dorsales.length;
+        
+        if(dorsalesDuplicados) {
+            return res.status(400).send({message:'No puede haber dorsales duplicados'})
+        }
+
         const nuevaPorra = await prisma.porra.create({
             data: {
-                nombre: req.body.nombre,
-                usuarioId: req.user.userId,
+                nombre: nombre.trim(),
+                usuarioId,
                 corredores: { connect: dorsales.map(dorsal => ({dorsal}))}
             }
-        })
-        res.status(201).json({ message: 'Porra creada', porra: nuevaPorra });
+        });
+
+        res.status(201).send({ message: 'Porra creada correctamente', porra: nuevaPorra });
 
     } catch(error) {
-        console.error({message:'Error al crear la lista', error})
+        console.error({message:'Error al crear la porra', error})
     }
 };
-
-async function editarPorra(req, res) {
-    try {
-
-    } catch(error) {
-        console.error({message: 'No se pudo editar la lista', error})
-    }
-    
-}
 
 module.exports = {
     obtenerPorra,
     crearPorra,
-    editarPorra
+
 }
