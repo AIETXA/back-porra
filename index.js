@@ -4,6 +4,7 @@ const app = express();
 const dotenv = require('dotenv');
 const rutasCorredores = require('./routes/corredoresRoute');
 const loginRoute = require('./routes/loginRoute');
+const authRoute = require('./routes/authRoute')
 
 dotenv.config()
 const PORT = process.env.PORT || 3000;
@@ -12,7 +13,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use('/', rutasCorredores);
-app.use('/', loginRoute);
+app.use('/login', loginRoute);
+app.use('/auth', authRoute)
 
 app.get('/', (req, res) => {
     res.send('Empezando proyecto final')
