@@ -42,6 +42,7 @@ model Corredor {
   apellido String
   dorsal   Int    @unique
   porras   CorredorPorra[]
+  resultados ResultadoEtapa[]
   url      String
 }
 
@@ -52,6 +53,7 @@ model CorredorPorra {
   corredor   Corredor @relation(fields: [corredorId], references: [id])
   corredorId Int
   puntos     Int      @default(0)
+ 
 
   @@unique([porraId, corredorId]) // para q no se dupliquen los corredores.
 }
@@ -62,4 +64,27 @@ model Token {
   expiracion   DateTime
   user         User @relation(fields: [userId], references: [id])
   userId       Int
+}
+
+model Etapa {
+  id      Int @id @default(autoincrement())
+  numero  Int @unique
+  fecha   DateTime
+  tipo    TipoEtapa
+  resultados ResultadoEtapa[]
+}
+
+model ResultadoEtapa {
+  id          Int @id @default(autoincrement())
+  etapa       Etapa @relation(fields: [etapaId], references: [id])
+  etapaId     Int
+  corredor    Corredor @relation(fields: [corredorId], references: [id])
+  corredorId  Int
+  posicion    Int
+}
+
+enum TipoEtapa {
+  EtapasDiarias
+  FinalMontaña
+  FinalGeneral
 }

@@ -14,6 +14,7 @@ async function obtenerPorra(req, res) {
 
     } catch (error) {
         console.error({message: 'No se pudo obtener la lista', error})
+        return res.status(400).send({message:'Error al intentar obtener la lista'})
     }
     
 };
@@ -35,7 +36,8 @@ async function crearPorra(req, res) {
         if(dorsalesDuplicados) {
             return res.status(400).send({message:'No puede haber dorsales duplicados'})
         }
-
+        
+    
         const nuevaPorra = await prisma.porra.create({
             data: {
                 nombre: nombre.trim(),
@@ -48,6 +50,7 @@ async function crearPorra(req, res) {
 
     } catch(error) {
         console.error({message:'Error al crear la porra', error})
+        return res.status(400).send({message: 'No se pudo crear la lista'})
     }
 };
 

@@ -33,4 +33,10 @@ router.get('/auth/:token', async (req, res) => {
     }
 });
 
+router.get('/me', authMiddleware, (req, res) => {
+  res.json({ user: req.user });
+});
+
+
+
 module.exports = router

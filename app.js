@@ -5,7 +5,9 @@ const dotenv = require('dotenv');
 const rutasCorredores = require('./routes/corredoresRoute');
 const loginRoute = require('./routes/loginRoute');
 const authRoute = require('./routes/authRoute');
-const porraRoute = require('./routes/porraRoute')
+const porraRoute = require('./routes/porraRoute');
+const etapasRoute = require('./routes/etapasRoute');
+
 
 dotenv.config()
 const PORT = process.env.PORT || 3000;
@@ -13,10 +15,11 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.use('/', rutasCorredores);
-app.use('/login', loginRoute);
-app.use('/auth', authRoute)
-app.use('/porras', porraRoute)
+app.use('/api/corredores', rutasCorredores);
+app.use('/api/login', loginRoute);
+app.use('/api/auth', authRoute)
+app.use('/api/porras', porraRoute)
+app.use('/api/etapas', etapasRoute),
 
 app.get('/', (req, res) => {
     res.send('Empezando proyecto final')
