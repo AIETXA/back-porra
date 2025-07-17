@@ -1,4 +1,4 @@
-const prisma = require('../config/prismaBBDD')
+
 const jwt = require('jsonwebtoken')
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -17,7 +17,7 @@ function authMiddleware(req,res,next) {
 
     } catch(error) {
         console.error(error)
-        res.status(500).json({message:'Error de autenticacion'})
+        res.status(401).json({message:'Error de autenticacion'})
     }
 }
 

@@ -22,9 +22,11 @@ router.get('/auth/:token', async (req, res) => {
         }
 
         const datos= {userId: tokenOk.user.id, email: tokenOk.user.email};
-        const jwtToken = jwt.sign(datos, JWT_SECRET);
+        const jwtToken = jwt.sign(datos, JWT_SECRET, {expiresIn: '30d'});
 
         res.json({message: 'Login exitoso', token: jwtToken});
+
+        await prisma.token.delete({where: {token}});
 
     } catch(error) {
         res.status(500).send('Error al procesar el token')
