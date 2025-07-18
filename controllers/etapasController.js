@@ -27,7 +27,7 @@ const obtenerEtapaPorId = async(req,res) => {
 
 const crearEtapa = async(req, res) => {
     try{
-        const { numero, tipo, fecha } = req.body;
+        const { numero, tipo, fecha, recorrido, kilometros } = req.body;
 
         if(!numero || typeof numero !== 'number') {
             return res.status(400).send({message: 'El numero de la etapa es obligatorio'})
@@ -42,13 +42,16 @@ const crearEtapa = async(req, res) => {
             return res.status(400).send({message: 'La fecha de la etapa es obligatoria'})
         }
 
+
       
         const nuevaEtapa = await prisma.etapa.create({
             data: {
                 numero,
                 tipo,
                 fecha: fechaValida,
-             
+                recorrido,
+                kilometros
+                
             }
         });
 

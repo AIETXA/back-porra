@@ -71,6 +71,8 @@ model Etapa {
   numero  Int @unique
   fecha   DateTime
   tipo    TipoEtapa
+  recorrido String?
+  kilometros String?
   resultados ResultadoEtapa[]
 }
 

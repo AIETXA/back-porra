@@ -11,30 +11,46 @@ const mapTipoEtapa = (numeroEtapa) => {
 }
 
 const importarEtapas = async() => {
-   for(const etapa of etapasJson) {
+
+    for(const etapa of etapasJson) {
         if(etapa.ETAPA === '-') continue
 
     try {
         const numero = parseInt(etapa.ETAPA);
-        const tipo = mapTipoEtapa(numero)    
+        const tipo = mapTipoEtapa(numero);
+        const recorrido = etapa.SALIDA_Y_META.trim();
+        const kilometros = etapa.DISTANCIA.trim()    
+
+           console.log('RECORRIDO:', etapa.SALIDA_Y_META);
+            console.log('DISTANCIA:', etapa.DISTANCIA);
 
         const fechaXPartes = etapa.FECHA.split('. ')
         const fechaFormateada = fechaXPartes[1]
         const fechaISO = new Date(fechaFormateada.split('/').reverse().join('-'))
 
-        await prisma.etapa.create({
-            data: {
+        await prisma.etapa.upsert({
+            where: { numero },
+            update: {
+                tipo,
+                fecha: fechaISO,
+                recorrido,
+                kilometros
+            },
+            create: {
                 numero,
                 tipo,
-                fecha: fechaISO
+                fecha: fechaISO,
+                recorrido,
+                kilometros
             }
         })
 
     } catch (error) {
-       console.error('Error al importar las etapas')
+       console.error('Error al importar las etapas', error)
         } 
     }
     console.log('Importacion terminada')
+ 
 }
 
 importarEtapas()
