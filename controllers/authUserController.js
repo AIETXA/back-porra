@@ -30,7 +30,7 @@ async function login(req,res) {
         }
     });
 
-    const loginLink = `http://localhost:3000/auth?token=${token}`;
+    const loginLink = `http://localhost:3000/api/user/${token}`;
     const subject = 'Enlace de acceso';
     const html = `
         <p>¡Hola! Hace click en el siguiente enlace para acceder:</p>

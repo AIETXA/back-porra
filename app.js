@@ -3,11 +3,12 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 const rutasCorredores = require('./routes/corredoresRoute');
-const loginRoute = require('./routes/loginRoute');
-const authRoute = require('./routes/authRoute');
+const loginAdminRoute = require('./routes/loginAdminRoute')
+const authUserRoute = require('./routes/authUserRoute');
+const adminPanelRoute = require('./routes/adminPanelRoute')
 const porraRoute = require('./routes/porraRoute');
 const etapasRoute = require('./routes/etapasRoute');
-
+const session = require('express-session');
 
 dotenv.config()
 const PORT = process.env.PORT || 3000;
@@ -15,11 +16,23 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'miSecretoSuperSecreto',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 3600000 }
+}));
+
+
+app.use('/admin', loginAdminRoute)
+app.use('/admin', adminPanelRoute)
+
+app.use('/api/user', authUserRoute)
+
 app.use('/api/corredores', rutasCorredores);
-app.use('/api/login', loginRoute);
-app.use('/api/auth', authRoute)
 app.use('/api/porras', porraRoute)
 app.use('/api/etapas', etapasRoute),
+
 
 app.get('/', (req, res) => {
     res.send('Empezando proyecto final')
