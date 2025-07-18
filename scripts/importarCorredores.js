@@ -1,6 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
 const fs = require('fs');
-
 const prisma = new PrismaClient();
 
 async function main() {
@@ -26,12 +25,12 @@ async function main() {
     });
   }
 
-  console.log('✅ Corredores importados correctamente');
+  console.log('Corredores importados correctamente');
 }
 
 main()
   .catch((e) => {
-    console.error('❌ Error al importar:', e);
+    console.error('Error al importar:', e);
     process.exit(1);
   })
   .finally(() => {
