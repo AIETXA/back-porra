@@ -83,6 +83,9 @@ model ResultadoEtapa {
   corredor    Corredor @relation(fields: [corredorId], references: [id])
   corredorId  Int
   posicion    Int
+
+
+  @@unique([etapaId, corredorId])
 }
 
 enum TipoEtapa {
