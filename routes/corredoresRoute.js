@@ -4,7 +4,7 @@ const corredorController = require('../controllers/corredorController');
 
 
 
-router.get('/corredores', corredorController.getAllCorredores);
-router.get('/corredorId', corredorController.getCorredorById);
+router.get('/', corredorController.getAllCorredores);
+router.get('/dorsal/:dorsal', corredorController.getCorredorById);
 
 module.exports = router 

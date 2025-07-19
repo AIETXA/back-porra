@@ -1,5 +1,7 @@
 const prisma = require('../config/prismaBBDD')
 
+
+
 const obtenerTodasLasEtapas = async(req, res) => {
     try {
         const etapas = await prisma.etapa.findMany()
@@ -7,21 +9,25 @@ const obtenerTodasLasEtapas = async(req, res) => {
 
     } catch (error) {
         console.error('No se pudo obtener la etapa')
-        res.status(400).send({message: 'Error al intentar obtener la etapa'})
+        res.status(404).send({message: 'Error al intentar obtener la etapa'})
     }
 }
 
-const obtenerEtapaPorId = async(req,res) => {
+const obtenerEtapaPorNumero = async(req,res) => {
     try {
-        const { id } = req.params;
-        const etapaId = parseInt(id);
+        
+        const numero = parseInt(req.params.numero);
 
-        const etapa = await prisma.etapa.findUnique({where:{id:etapaId}})
-        res.json(etapa)
+        const etapa = await prisma.etapa.findUnique({where:{numero}})
+        if(!etapa) {
+            return res.status(404).send({message:'Etapa no encontrada'})
+        }
+
+        res.json(etapa);
 
     } catch (error) {
-        console.error('No se pudo obtener etapa por ID ')
-        res.status(400).send({message:'Error al intentar obtener etapa por ID'})
+        console.error('No se pudo obtener etapa por numero ')
+        res.status(404).send({message:'Error al intentar obtener etapa por numero'})
     }
 }
 
@@ -59,11 +65,11 @@ const crearEtapa = async(req, res) => {
 
     } catch(error) {
         console.error('No se pudo crear la etapa')
-        res.status(400).send({message: 'Error al intentar crear la etapa'})
+        res.status(500).send({message: 'Error al intentar crear la etapa'})
     }
 }
 module.exports = {
     obtenerTodasLasEtapas, 
-    obtenerEtapaPorId,
+    obtenerEtapaPorNumero,
     crearEtapa
 }

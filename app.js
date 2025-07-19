@@ -2,10 +2,10 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
-const rutasCorredores = require('./routes/corredoresRoute');
 const loginAdminRoute = require('./routes/loginAdminRoute')
-const authUserRoute = require('./routes/authUserRoute');
 const adminPanelRoute = require('./routes/adminPanelRoute')
+const authUserRoute = require('./routes/authUserRoute');
+const corredoresRoute = require('./routes/corredoresRoute');
 const porraRoute = require('./routes/porraRoute');
 const etapasRoute = require('./routes/etapasRoute');
 const session = require('express-session');
@@ -29,9 +29,9 @@ app.use('/admin', adminPanelRoute)
 
 app.use('/api/user', authUserRoute)
 
-app.use('/api/corredores', rutasCorredores);
+app.use('/api/corredores', corredoresRoute)
 app.use('/api/porras', porraRoute)
-app.use('/api/etapas', etapasRoute),
+app.use('/api/etapas', etapasRoute)
 
 
 app.get('/', (req, res) => {

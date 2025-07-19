@@ -13,11 +13,27 @@ async function obtenerPorra(req, res) {
         res.json(porras)
 
     } catch (error) {
-        console.error({message: 'No se pudo obtener la lista', error})
-        return res.status(400).send({message:'Error al intentar obtener la lista'})
+        console.error('No se pudo obtener la lista', error)
+        return res.status(500).send({message:'Error al intentar obtener la lista'})
     }
     
 };
+
+async function obtenerTodasLasPorras(req, res) {
+    try {
+        const porras = await prisma.porra.findMany({
+            include: { corredores: true }
+        })
+        
+        res.json(porras)
+
+    } catch (error) {
+        console.error('No se pueden obtener las listas', error)
+        return res.status(500).send({message:'Error al intentar obtener las listas'})
+    }
+}
+
+
 
 async function crearPorra(req, res) {
     try{
@@ -28,7 +44,7 @@ async function crearPorra(req, res) {
             return res.status(400).send({message: 'El nombre de la lista es obligatorio'})
         }
 
-        if(!Array.isArray(dorsales || dorsales.length !== 15 || !dorsales.every(d =>typeof d==='number')))
+        if(!Array.isArray(dorsales) || dorsales.length !== 15 || !dorsales.every(d =>typeof d==='number'))
             return res.status(400).send({message: 'Error al cargar los dorsales. Verifica que haya 15 dorsales tipo número'})
         
         const dorsalesDuplicados = new Set(dorsales).size !==dorsales.length;
@@ -49,13 +65,14 @@ async function crearPorra(req, res) {
         res.status(201).send({ message: 'Porra creada correctamente', porra: nuevaPorra });
 
     } catch(error) {
-        console.error({message:'Error al crear la porra', error})
-        return res.status(400).send({message: 'No se pudo crear la lista'})
+        console.error('Error al crear la porra', error)
+        return res.status(500).send({message: 'No se pudo crear la lista'})
     }
 };
 
 module.exports = {
     obtenerPorra,
-    crearPorra,
+    obtenerTodasLasPorras,
+    crearPorra
 
 }

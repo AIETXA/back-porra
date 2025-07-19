@@ -40,9 +40,6 @@ router.get('/me', authMiddleware, (req, res) => {
 });
 
 router.post('/login', authUserController.login);
-router.get('/login', (req, res) => {
-  res.send('<h1>Formulario de login aquí</h1>');
-});
 
 
 module.exports = router
