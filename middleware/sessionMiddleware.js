@@ -3,7 +3,7 @@ function adminSessionMiddleware(req, res, next) {
     return next();
   }
 
-  res.redirect('/login?error=1');
+  res.redirect('/admin/login?error=1');
 }
 
 module.exports = adminSessionMiddleware;

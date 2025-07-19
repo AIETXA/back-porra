@@ -7,7 +7,7 @@ const mostrarLogin = (req, res) => {
     <h2>Iniciar Sesión</h2>
     ${error === '1' ? '<p style="color:red;">Credenciales incorrectas</p>' : ''}
     ${error === '2' ? '<p style="color:red;">Debes iniciar sesión</p>' : ''}
-    <form method="POST" action="/login">
+    <form method="POST" action="/admin/login">
       <input type="text" name="user" placeholder="Usuario admin" required />
       <input type="password" name="pass" placeholder="Contraseña" required />
       <button type="submit">Entrar</button>
@@ -31,7 +31,7 @@ res.redirect('/login?error=1');
 
 const logout = (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/login');
+    res.redirect('/admin/login');
   });
 };
 
