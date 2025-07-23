@@ -1,6 +1,7 @@
 
 const express = require('express');
 const app = express();
+const cors = require('cors')
 const dotenv = require('dotenv');
 const loginAdminRoute = require('./routes/loginAdminRoute')
 const adminPanelRoute = require('./routes/adminPanelRoute')
@@ -12,6 +13,13 @@ const session = require('express-session');
 
 dotenv.config()
 const PORT = process.env.PORT || 3000;
+
+const corsOptions = {
+  origin: 'http://localhost:5173', 
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
