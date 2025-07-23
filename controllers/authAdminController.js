@@ -26,7 +26,7 @@ const procesarLogin = (req, res) => {
     return res.redirect('/admin');
   }
 
-res.redirect('/login?error=1');
+res.redirect('/admin/login?error=1');
 };
 
 const logout = (req, res) => {

@@ -13,7 +13,7 @@ async function actualizarPosiciones(numeroEtapa, dorsales) {
 
 
         const tablaPuntos = tablasDePuntuaciones[etapa.tipo];
-        if(!tablaPuntos) throw new Erros('Error con el tipo de puntuacion')
+        if(!tablaPuntos) throw new Error('Error con el tipo de puntuacion')
     
         const todasLasPorras = await prisma.porra.findMany({
             include: {corredores: true}
@@ -31,18 +31,18 @@ async function actualizarPosiciones(numeroEtapa, dorsales) {
             puntosTotales += puntos;
         }
     }
+    
+    await prisma.porra.update({
+        where: {id: porra.id},
+        data: {
+            puntosTotales: { puntosTotales}
+        }
+    });
 } 
-
-await prisma.porra.update({
-    where: {id: porra.id},
-    data: {
-        puntosTotales: { increment: puntosTotales}
-    }
-})
 
 } catch (error) {
         console.error('No se pudo actualizar el marcador')
     }
 }
 
-module.exports = actualizarPosiciones
+module.exports = actualizarPosiciones;

@@ -16,8 +16,8 @@ const getAllCorredores = async(req, res) => {
 
 const getCorredorById = async(req, res) => {
     try {
-        const id = parseInt(req.params.id); 
-        const corredor = await prisma.corredor.findUnique({where: {id:id}});
+        const id = parseInt(req.params.dorsal); 
+        const corredor = await prisma.corredor.findUnique({where: {dorsal}});
         
         if(!corredor) {
             return res.status(404).send({message:'Corredor no encontrado'})
