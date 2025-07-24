@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router()
 const { obtenerTodasLasEtapas, obtenerEtapaPorNumero, crearEtapa, procesarEtapa } = require('../controllers/etapasController');
-const adminSessionMiddleware = require('../middleware/sessionMiddleware');
+const authMiddleware = require('../middleware/authMiddleware');
 
 
 
-router.get('/', adminSessionMiddleware , obtenerTodasLasEtapas)
-router.get('/:numero',adminSessionMiddleware  , obtenerEtapaPorNumero)
-router.post('/', adminSessionMiddleware, crearEtapa)
-router.post('/procesar-etapa', adminSessionMiddleware, procesarEtapa )
+router.get('/', /*authMiddleware ,*/ obtenerTodasLasEtapas)
+router.get('/:numero', obtenerEtapaPorNumero)
+router.post('/',  crearEtapa)
+router.post('/procesar-etapa', procesarEtapa )
 
 
 module.exports = router;

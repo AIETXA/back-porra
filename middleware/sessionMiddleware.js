@@ -1,4 +1,4 @@
-function adminSessionMiddleware(req, res, next) {
+/*function adminSessionMiddleware(req, res, next) {
   if (req.session && req.session.authenticated) {
     return next();
   }
@@ -6,4 +6,4 @@ function adminSessionMiddleware(req, res, next) {
   res.redirect('/admin/login?error=1');
 }
 
-module.exports = adminSessionMiddleware;
+module.exports = adminSessionMiddleware;*/

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { procesarLogin, logout } = require('../controllers/authAdminController')
-
+const authMiddleware = require('../middleware/authMiddleware')
 
 router.post('/login', procesarLogin);
 
-router.get('/', (req, res) => {
+router.get('/', authMiddleware, (req, res) => {
     res.set('Cache-Control', 'no-store'); 
       
     res.send(`
@@ -57,7 +57,7 @@ router.get('/', (req, res) => {
   `);
 });
 
-router.get('/logout', logout);
+router.get('/logout', authMiddleware  ,logout);
 
 
 

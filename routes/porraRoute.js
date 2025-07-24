@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const porraController = require('../controllers/porraController')
-const adminSessionMiddleware = require('../middleware/sessionMiddleware')
+const authMiddleware = require('../middleware/authMiddleware')
 
 
-router.get('/',adminSessionMiddleware, porraController.obtenerPorra),
-router.post('/crear',adminSessionMiddleware, porraController.crearPorra)
+router.get('/',authMiddleware, porraController.obtenerPorra),
+router.post('/crear',authMiddleware, porraController.crearPorra)
 
 
 module.exports = router;
