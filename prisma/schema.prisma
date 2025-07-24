@@ -34,6 +34,7 @@ model Porra {
   pagada        Boolean  @default(false) 
   createdAt     DateTime @default(now())
   puntosTotales Int             @default(0)
+  ranking       Int?  
 }
 
 model Corredor {

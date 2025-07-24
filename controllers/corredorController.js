@@ -10,7 +10,7 @@ const getAllCorredores = async(req, res) => {
 
 } catch (error) {
     console.log(error);
-    res.status(404).send({message:'Error al intentar obtener todos los corredores'})
+    res.status(404).json({message:'Error al intentar obtener todos los corredores'})
 }
 }
 
@@ -20,13 +20,13 @@ const getCorredorById = async(req, res) => {
         const corredor = await prisma.corredor.findUnique({where: {dorsal}});
         
         if(!corredor) {
-            return res.status(404).send({message:'Corredor no encontrado'})
+            return res.status(404).json({message:'Corredor no encontrado'})
         }
         res.json(corredor)
 
     } catch(error) {
         console.log(error)
-        res.status(404).send({message:'Error al intentar obtener corredor por ID'})
+        res.status(404).json({message:'Error al intentar obtener corredor por ID'})
     }
 }
 

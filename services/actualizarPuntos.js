@@ -2,7 +2,7 @@ const prisma = require('../config/prismaBBDD');
 const tablasDePuntuaciones = require('../utils/puntuaciones')
 
 
-async function actualizarPosiciones(numeroEtapa, dorsales) {
+async function calcularPuntosPorraPorEtapa(numeroEtapa, dorsales) {
     try {
         const etapa = await prisma.etapa.findUnique({
             where: { numero: numeroEtapa },
@@ -35,7 +35,7 @@ async function actualizarPosiciones(numeroEtapa, dorsales) {
     await prisma.porra.update({
         where: {id: porra.id},
         data: {
-            puntosTotales: { puntosTotales}
+            puntosTotales:  puntosTotales
         }
     });
 } 
@@ -45,4 +45,24 @@ async function actualizarPosiciones(numeroEtapa, dorsales) {
     }
 }
 
-module.exports = actualizarPosiciones;
+async function  calcularRanking() {
+    const porras = await prisma.porra.findMany({
+        orderBy: {puntosTotales:'desc'}
+    });
+
+    for(let i = 0; i < porras.length; i ++) {
+        const porra = porras[i];
+
+        await prisma.porra.update({
+            where: { id: porra.id },
+            data: {ranking: i + 1}
+        })
+    }
+
+    console.log('Ranking actualizado correctamente')
+}
+
+module.exports = {
+    calcularPuntosPorraPorEtapa,
+    calcularRanking
+}
