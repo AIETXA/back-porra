@@ -8,9 +8,9 @@ router.post('/login', procesarLogin);
 
 router.get('/', adminSessionMiddleware, (req, res) => {
     res.set('Cache-Control', 'no-store'); 
-        res.send('<h1 style="color: red">Esta es una nueva prueba sin cache</h1>');
+        //res.send('<h1 style="color: red">Esta es una nueva prueba sin cache</h1>');
 
-    /*res.send(`
+    res.send(`
         <!DOCTYPE html>
             <html lang="es">
             <head>
@@ -56,7 +56,7 @@ router.get('/', adminSessionMiddleware, (req, res) => {
             </ul>
             </body>
             </html>
-  `);*/
+  `);
 });
 
 router.get('/logout', logout);
