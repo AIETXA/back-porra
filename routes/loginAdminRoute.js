@@ -7,7 +7,10 @@ router.get('/login', mostrarLogin);
 router.post('/login', procesarLogin);
 
 router.get('/', adminSessionMiddleware, (req, res) => {
-    res.send(`
+    res.set('Cache-Control', 'no-store'); 
+        res.send('<h1 style="color: red">Esta es una nueva prueba sin cache</h1>');
+
+    /*res.send(`
         <!DOCTYPE html>
             <html lang="es">
             <head>
@@ -21,7 +24,7 @@ router.get('/', adminSessionMiddleware, (req, res) => {
                 color: #333;
                 }
                 h2 {
-                color: #0066cc;
+                color: #f90b96ff;
                 }
                 ul {
                 list-style: none;
@@ -32,7 +35,7 @@ router.get('/', adminSessionMiddleware, (req, res) => {
                 }
                 a {
                 text-decoration: none;
-                background-color: #0066cc;
+                background-color: #00cc36ff;
                 color: white;
                 padding: 0.5rem 1rem;
                 border-radius: 5px;
@@ -46,14 +49,14 @@ router.get('/', adminSessionMiddleware, (req, res) => {
             <h2>Bienvenido al Panel de Administración</h2>
             <p>Selecciona una opción:</p>
             <ul>
-                <li><a href="/admin/etapas">Cargar o ver etapas</a></li>
-                <li><a href="/admin/corredores">Ver corredores</a></li>
-                <li><a href="/admin/listas">Ver listas</a></li>
-                <li><a href="/admin/logout">Cerrar sesión</a></li>
+                <li><a href="http://localhost:5173/admin/etapas">Ver etapas</a></li>
+                <li><a href="http://localhost:5173/admin/corredores">Ver corredores</a></li>
+                <li><a href="http://localhost:5173/admin/listas">Ver listas</a></li>
+                <li><a href="http://localhost:5173/admin/logout">Cerrar sesión</a></li>
             </ul>
             </body>
             </html>
-  `);
+  `);*/
 });
 
 router.get('/logout', logout);

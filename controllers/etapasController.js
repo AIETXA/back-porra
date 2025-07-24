@@ -1,5 +1,4 @@
 const prisma = require('../config/prismaBBDD')
-const procesarEtapa = require('../services/procesarEtapa')
 const procesarEtapaService = require('../services/procesarEtapa')
 
 
@@ -49,8 +48,6 @@ const crearEtapa = async(req, res) => {
             return res.status(400).send({message: 'La fecha de la etapa es obligatoria'})
         }
 
-
-      
         const nuevaEtapa = await prisma.etapa.create({
             data: {
                 numero,
@@ -68,8 +65,9 @@ const crearEtapa = async(req, res) => {
         console.error('No se pudo crear la etapa')
         res.status(500).send({message: 'Error al intentar crear la etapa'})
     }
+}
 
-  const procesarEtapa = async(req, res) => {
+const procesarEtapa = async(req, res) => {
     try {
         const { numeroEtapa, dorsales } = req.body;
 
@@ -85,7 +83,7 @@ const crearEtapa = async(req, res) => {
         res.status(500).json({message:`No se pudo procesar la etapa ${numeroEtapa}`})
     }
   }  
-}
+
 module.exports = {
     obtenerTodasLasEtapas, 
     obtenerEtapaPorNumero,
