@@ -1,6 +1,12 @@
 require('dotenv').config();
+const jwt = require('jsonwebtoken')
+
+const validarUser = process.env.AUTH_USER;
+const validarPass = process.env.AUTH_PASS;
+const tokenSecret = process.env.JWT_SECRET;
 
 
+/*
 const mostrarLogin = (req, res) => {
   const error = req.query.error;
   res.send(`
@@ -13,30 +19,28 @@ const mostrarLogin = (req, res) => {
       <button type="submit">Entrar</button>
     </form>
   `);
-};
+};*/
 
 const procesarLogin = (req, res) => {
   const { user, pass } = req.body;
 
-  const validarUser = process.env.AUTH_USER;
-  const validarPass = process.env.AUTH_PASS;
 
   if (user === validarUser && pass === validarPass) {
-    req.session.authenticated = true;
-    return res.redirect('/admin');
+    const token = jwt.sign({admin: user}, tokenSecret, {expiresIn:'1h'} );
+    
+    return res.json({token});
   }
 
-res.redirect('/admin/login?error=1');
+res.status(400).json({message:'Credenciales incorrectas'});
 };
 
 const logout = (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/admin/login');
-  });
+  res.json({message:'Cierre de sesion exitoso'});
+  
 };
 
 module.exports = {
-  mostrarLogin,
+  
   procesarLogin,
   logout
 };

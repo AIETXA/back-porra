@@ -1,15 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const adminSessionMiddleware = require('../middleware/sessionMiddleware')
-const { mostrarLogin, procesarLogin, logout } = require('../controllers/authAdminController')
+const { procesarLogin, logout } = require('../controllers/authAdminController')
 
-router.get('/login', mostrarLogin);
+
 router.post('/login', procesarLogin);
 
-router.get('/', adminSessionMiddleware, (req, res) => {
+router.get('/', (req, res) => {
     res.set('Cache-Control', 'no-store'); 
-        //res.send('<h1 style="color: red">Esta es una nueva prueba sin cache</h1>');
-
+      
     res.send(`
         <!DOCTYPE html>
             <html lang="es">
