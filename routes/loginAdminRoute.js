@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { procesarLogin, logout } = require('../controllers/authAdminController')
+const { procesarLogin, logout, mostrarAccesoLogin } = require('../controllers/authAdminController')
 const authMiddleware = require('../middleware/authMiddleware')
 
+router.get('/login', mostrarAccesoLogin)
 router.post('/login', procesarLogin);
 
 router.get('/', authMiddleware, (req, res) => {

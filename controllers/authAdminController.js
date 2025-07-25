@@ -6,8 +6,8 @@ const validarPass = process.env.AUTH_PASS;
 const tokenSecret = process.env.JWT_SECRET;
 
 
-/*
-const mostrarLogin = (req, res) => {
+
+const mostrarAccesoLogin = (req, res) => {
   const error = req.query.error;
   res.send(`
     <h2>Iniciar Sesión</h2>
@@ -19,7 +19,7 @@ const mostrarLogin = (req, res) => {
       <button type="submit">Entrar</button>
     </form>
   `);
-};*/
+}
 
 const procesarLogin = (req, res) => {
   const { user, pass } = req.body;
@@ -40,7 +40,7 @@ const logout = (req, res) => {
 };
 
 module.exports = {
-  
+  mostrarAccesoLogin,
   procesarLogin,
   logout
 };
