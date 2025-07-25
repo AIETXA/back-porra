@@ -23,6 +23,7 @@ app.use(cors(corsOptions));
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(express.static('public'));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'miSecretoSuperSecreto',
