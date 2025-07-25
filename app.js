@@ -9,7 +9,7 @@ const authUserRoute = require('./routes/authUserRoute');
 const corredoresRoute = require('./routes/corredoresRoute');
 const porraRoute = require('./routes/porraRoute');
 const etapasRoute = require('./routes/etapasRoute');
-const session = require('express-session');
+
 
 dotenv.config()
 const PORT = process.env.PORT || 3000;
@@ -25,16 +25,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static('public'));
 
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'miSecretoSuperSecreto',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 3600000 }
-}));
 
 
-app.use('/admin', loginAdminRoute)
-app.use('/admin', adminPanelRoute)
+app.use('/admin', loginAdminRoute, adminPanelRoute)
+
 
 app.use('/api/user', authUserRoute)
 

@@ -1,18 +1,18 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken')
 
-const validarUser = process.env.AUTH_USER;
+const validarAdmin = process.env.AUTH_ADMIN;
 const validarPass = process.env.AUTH_PASS;
 const tokenSecret = process.env.JWT_SECRET;
 
 
 
 const procesarLogin = (req, res) => {
-  const { user, pass } = req.body;
+  const { admin, pass } = req.body;
 
 
-  if (user === validarUser && pass === validarPass) {
-    const token = jwt.sign({admin: user}, tokenSecret, {expiresIn:'1h'} );
+  if (admin === validarAdmin && pass === validarPass) {
+    const token = jwt.sign({admin: admin}, tokenSecret, {expiresIn:'1h'} );
     
     return res.json({token});
   }
