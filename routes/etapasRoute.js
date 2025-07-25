@@ -4,11 +4,13 @@ const { obtenerTodasLasEtapas, obtenerEtapaPorNumero, crearEtapa, procesarEtapa 
 const authMiddleware = require('../middleware/authMiddleware');
 
 
+router.use(authMiddleware)
 
-router.get('/', /*authMiddleware ,*/ obtenerTodasLasEtapas)
-router.get('/:numero', obtenerEtapaPorNumero)
 router.post('/',  crearEtapa)
-router.post('/procesar-etapa', procesarEtapa )
+
+router.post('/:numero/procesar', procesarEtapa )
+router.get('/', obtenerTodasLasEtapas)
+router.get('/:numero', obtenerEtapaPorNumero)
 
 
 module.exports = router;

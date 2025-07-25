@@ -13,7 +13,7 @@ const mapTipoEtapa = (numeroEtapa) => {
 const importarEtapas = async() => {
 
     for(const etapa of etapasJson) {
-        if(etapa.ETAPA === '-') continue
+        if (!etapa.ETAPA || isNaN(parseInt(etapa.ETAPA))) continue;
 
     try {
         const numero = parseInt(etapa.ETAPA);
