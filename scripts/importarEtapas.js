@@ -3,9 +3,10 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const etapasJson = require('../data/recorridoOficial.json')
 
-const mapTipoEtapa = (numeroEtapa) => {
-    if(numeroEtapa === 20) return 'FinalMontaña'
-    if(numeroEtapa === 21) return 'FinalGeneral'
+const mapTipoEtapa = (etapa, tipo) => {
+    if (etapa === '-' && tipo.toLowerCase().includes('descanso')) return 'Descanso';
+
+    const numero = parseInt(etapa);
 
     return 'EtapasDiarias'
 }
@@ -17,7 +18,7 @@ const importarEtapas = async() => {
 
     try {
         const numero = parseInt(etapa.ETAPA);
-        const tipo = mapTipoEtapa(numero);
+        const tipo = mapTipoEtapa(etapa.ETAPA, etapa.TIPO);
         const recorrido = etapa.SALIDA_Y_META.trim();
         const kilometros = etapa.DISTANCIA.trim()    
 

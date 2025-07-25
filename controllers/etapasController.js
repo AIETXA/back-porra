@@ -4,7 +4,18 @@ const procesarEtapaService = require('../services/procesarEtapa')
 
 const obtenerTodasLasEtapas = async(req, res) => {
     try {
-        const etapas = await prisma.etapa.findMany()
+        const etapas = await prisma.etapa.findMany({
+              orderBy: [
+                {
+                    fecha: 'asc' 
+                },
+                {
+                    numero: 'asc'
+                }
+            ]
+        });
+        
+        
         res.json(etapas)
 
     } catch (error) {
@@ -13,12 +24,11 @@ const obtenerTodasLasEtapas = async(req, res) => {
     }
 }
 
-const obtenerEtapaPorNumero = async(req,res) => {
+const obtenerEtapaPorId = async(req,res) => {
     try {
+        const {id} = req.params;
+        const etapa = await prisma.etapa.findUnique({where:{id: parseInt(id)}})
         
-        const numero = parseInt(req.params.numero);
-
-        const etapa = await prisma.etapa.findUnique({where:{numero}})
         if(!etapa) {
             return res.status(404).json({message:'Etapa no encontrada'})
         }
@@ -86,7 +96,7 @@ const procesarEtapa = async(req, res) => {
 
 module.exports = {
     obtenerTodasLasEtapas, 
-    obtenerEtapaPorNumero,
+    obtenerEtapaPorId,
     crearEtapa,
     procesarEtapa
 }

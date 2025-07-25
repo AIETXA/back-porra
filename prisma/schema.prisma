@@ -92,6 +92,7 @@ model ResultadoEtapa {
 
 enum TipoEtapa {
   EtapasDiarias
+  Descanso
   FinalMontaña
   FinalGeneral
 }
