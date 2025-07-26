@@ -16,7 +16,7 @@ const getAllCorredores = async(req, res) => {
 
 const getCorredorById = async(req, res) => {
     try {
-        const id = parseInt(req.params.dorsal); 
+        const dorsal = parseInt(req.params.dorsal); 
         const corredor = await prisma.corredor.findUnique({where: {dorsal}});
         
         if(!corredor) {

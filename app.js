@@ -8,8 +8,8 @@ const adminPanelRoute = require('./routes/adminPanelRoute')
 const authUserRoute = require('./routes/authUserRoute');
 const corredoresRoute = require('./routes/corredoresRoute');
 const porraRoute = require('./routes/porraRoute');
-const etapasRoute = require('./routes/etapasRoute');
-
+const etapasAdminRoute = require('./routes/etapasAdminRoute');
+const etapasPublicRoute = require('./routes/publicRoutes')
 
 dotenv.config()
 const PORT = process.env.PORT || 3000;
@@ -29,12 +29,14 @@ app.use(express.static('public'));
 
 app.use('/admin', loginAdminRoute, adminPanelRoute)
 
-
 app.use('/api/user', authUserRoute)
 
-app.use('/api/corredores', corredoresRoute)
+app.use('/corredores', corredoresRoute)
 app.use('/api/porras', porraRoute)
-app.use('/api/etapas', etapasRoute)
+app.use('/api/etapas', etapasAdminRoute)
+
+app.use('/etapas', etapasPublicRoute)
+
 
 
 app.get('/', (req, res) => {
