@@ -32,6 +32,7 @@ app.use('/admin', loginAdminRoute, adminPanelRoute)
 app.use('/api/user', authUserRoute)
 
 app.use('/corredores', corredoresRoute)
+
 app.use('/api/porras', porraRoute)
 app.use('/api/etapas', etapasAdminRoute)
 
