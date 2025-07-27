@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 
 router.get('/',authMiddleware, porraController.obtenerPorra),
-router.post('/crear',authMiddleware, porraController.crearPorra)
+router.post('/',authMiddleware, porraController.crearPorra)
 
 
 module.exports = router;

@@ -30,6 +30,7 @@ app.use(express.static('public'));
 app.use('/admin', loginAdminRoute, adminPanelRoute)
 
 app.use('/api/user', authUserRoute)
+app.use('/dashboard/user', authUserRoute)
 
 app.use('/corredores', corredoresRoute)
 

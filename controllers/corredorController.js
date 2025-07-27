@@ -17,7 +17,13 @@ const getAllCorredores = async(req, res) => {
 const getCorredorById = async(req, res) => {
     try {
         const dorsal = parseInt(req.params.dorsal); 
-        const corredor = await prisma.corredor.findUnique({where: {dorsal}});
+        if(isNaN(dorsal)){
+            return res.status(400).json('Dorsal inválido')
+        }
+        const corredor = await prisma.corredor.findUnique({
+            where: {dorsal},
+            select: { nombre:true, apellido: true}
+        });
         
         if(!corredor) {
             return res.status(404).json({message:'Corredor no encontrado'})

@@ -4,6 +4,7 @@ const prisma = require('../config/prismaBBDD')
 const jwt = require('jsonwebtoken')
 const authMiddleware = require('../middleware/authMiddleware')
 const authUserController = require('../controllers/authUserController');
+const dashboardUser = require('../controllers/dashboardUser');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 
@@ -39,24 +40,35 @@ router.get('/me', authMiddleware, (req, res) => {
   res.json({ user: req.user });
 });
 
-router.get('/porras', authMiddleware, async (req, res) => {
-    const userId = req.user.userId;
+
+router.get('/porras/me', authMiddleware, async (req, res) => {
     try {
-       const porras = await prisma.porra.findMany({
-        where: {userId},
-        include: {
-            corredores,
-            etapas,
-            resultados,
-            ranking,
-
-        }
-       }) 
+        const porras = await prisma.porra.findMany({
+            where: { userId: req.user.userId },
+            include: { 
+                corredores: true,
+                etapas: true,
+                resultados: true,
+                ranking: true,
+             }
+        });
+        res.json({ porras });
     } catch (error) {
-
+        res.status(500).json({ message: 'Error al obtener tus porras' });
     }
 });
 
+router.get('/etapas', async (req, res) => {
+  const etapas = await prisma.etapa.findMany({ orderBy: { numero: 'asc' } });
+  res.json({ etapas });
+});
+
+router.get('/ranking', async (req, res) => {
+  const ranking = await calcularRanking();
+  res.json({ ranking });
+});
+
+router.get('/dashboard', authMiddleware, dashboardUser)
 
 router.post('/login', authUserController.login);
 

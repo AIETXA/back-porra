@@ -37,6 +37,7 @@ async function obtenerTodasLasPorras(req, res) {
 
 async function crearPorra(req, res) {
     try{
+        
         const usuarioId = req.user.userId;
         const { nombre, dorsales } = req.body;
 
@@ -57,11 +58,30 @@ async function crearPorra(req, res) {
         const nuevaPorra = await prisma.porra.create({
             data: {
                 nombre: nombre.trim(),
-                usuarioId,
-                corredores: { connect: dorsales.map(dorsal => ({dorsal}))}
+                user: { connect: { id: usuarioId } }
+                
             }
         });
+        const corredores = await prisma.corredor.findMany({
+                where: {dorsal: { in: dorsales }}
+        });
+         if(corredores.length !== 15) {
+             const encontrados = corredores.map(c => c.dorsal);
+            const faltantes = dorsales.filter(d => !encontrados.includes(d));
+            return res.status(400).send({ message: 'Dorsales no encontrados: ' + faltantes.join(', ') });
+            }
+           
+         
+         const relacionCorredores = corredores.map(corredor => ({
+            porraId: nuevaPorra.id,
+            corredorId: corredor.id,
+            
+            }));
 
+        await prisma.corredorPorra.createMany({
+            data: relacionCorredores
+            });
+        
         res.status(201).send({ message: 'Porra creada correctamente', porra: nuevaPorra });
 
     } catch(error) {
