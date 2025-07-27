@@ -1,10 +1,10 @@
 const prisma = require('../config/prismaBBDD')
 
 async function dashboardUser(req, res) {
-    const userId = req.user.id
+    const userId = req.user.userId
 
 const misPorras = await prisma.porra.findMany({
-  where: { userId: req.user.userId  },
+  where: { userId: userId  },
   include: {
     corredores: {
       include: {
@@ -39,5 +39,5 @@ const etapas = await prisma.etapa.findMany({
  
 }
 
-module.exports = dashboardUser
+module.exports = { dashboardUser }
 

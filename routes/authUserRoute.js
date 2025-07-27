@@ -3,8 +3,8 @@ const router = express.Router();
 const prisma = require('../config/prismaBBDD')
 const jwt = require('jsonwebtoken')
 const authMiddleware = require('../middleware/authMiddleware')
-const authUserController = require('../controllers/authUserController');
-const dashboardUser = require('../controllers/dashboardUser');
+const userController = require('../controllers/authUserController')
+const {dashboardUser} = require('../controllers/dashboardUser');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 
@@ -70,7 +70,7 @@ router.get('/ranking', async (req, res) => {
 
 router.get('/dashboard', authMiddleware, dashboardUser)
 
-router.post('/login', authUserController.login);
+router.post('/login', userController.login)
 
 
 module.exports = router
