@@ -4,9 +4,19 @@ async function dashboardUser(req, res) {
     const userId = req.user.id
 
 const misPorras = await prisma.porra.findMany({
-  where: { userId },
-  include: { corredores: true }
+  where: { userId: req.user.userId  },
+  include: {
+    corredores: {
+      include: {
+        corredor: true  
+      }
+    },
+    user: true,     
+  
+  }
 });
+
+
 
 const ranking = await prisma.porra.findMany({
   orderBy: { puntosTotales: 'desc' },

@@ -16,27 +16,33 @@ async function calcularPuntosPorraPorEtapa(numeroEtapa, dorsales) {
         if(!tablaPuntos) throw new Error('Error con el tipo de puntuacion')
     
         const todasLasPorras = await prisma.porra.findMany({
-            include: {corredores: true}
-        })
+            include: {
+                corredores: {
+                    include: {
+                        corredor: true
+                    }
+                }
+        }})
 
 
     for(const porra of todasLasPorras) {
+ 
        let puntosTotales = 0;
     
     for(const resultado of etapa.resultados){
-        const corredorPorra = porra.corredores.find(c => c.id === resultado.corredorId)
+        const corredorPorra = porra.corredores.find(c => c.corredorId === resultado.corredorId)
 
         if(corredorPorra) {
             const puntos = tablaPuntos[resultado.posicion] || 0;
             puntosTotales += puntos;
+            console.log(`Porra ${porra.nombre} actualizada con ${puntosTotales} puntos`);
+
         }
     }
     
     await prisma.porra.update({
         where: {id: porra.id},
-        data: {
-            puntosTotales:  puntosTotales
-        }
+        data: {puntosTotales:  puntosTotales}
     });
 } 
 
