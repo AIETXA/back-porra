@@ -1,4 +1,4 @@
-const prisma = require('../prismaClient')
+const prisma = require('../config/prismaBBDD')
 
 const obtenerRankingPorra = async (req, res) => {
   try {
