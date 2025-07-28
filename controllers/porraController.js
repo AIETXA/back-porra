@@ -8,8 +8,13 @@ async function obtenerPorra(req, res) {
         const usuarioId = req.user.userId;
         const porras = await prisma.porra.findMany({ 
             where: {usuarioId},
-            include: {corredores: true}   
-        });
+            include: {
+                  user: true, 
+                    corredores: {
+                        include: {
+                            corredores: true
+                        }   
+        }}});
         res.json(porras)
 
     } catch (error) {
@@ -22,8 +27,16 @@ async function obtenerPorra(req, res) {
 async function obtenerTodasLasPorras(req, res) {
     try {
         const porras = await prisma.porra.findMany({
-            include: { corredores: true }
-        })
+            include: {
+                user: true,
+                corredores: {
+                    include: {
+                        corredor: true
+                    }
+                }
+            }
+        });
+        
         
         res.json(porras)
 

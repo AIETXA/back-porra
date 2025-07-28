@@ -15,7 +15,7 @@ dotenv.config()
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: 'https://front-porra.netlify.app', 
+  origin: ['https://front-porra.netlify.app', 'http://localhost:5173' ],
   credentials: true
 };
 
