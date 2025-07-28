@@ -9,14 +9,9 @@ const tokenSecret = process.env.JWT_SECRET;
 
 const procesarLogin = (req, res) => {
   
-  const { admin, pass } = req.body;
-  console.log('ADMIN recibido:', admin);
-  console.log('PASS recibido:', pass);
-  console.log('VALIDADOR ADMIN:', validarAdmin);
-  console.log('VALIDADOR PASS:', validarPass);
-
-
-  if (admin === validarAdmin && pass === validarPass) {
+const { admin, pass } = req.body;
+  
+if (admin === validarAdmin && pass === validarPass) {
     const token = jwt.sign({admin: admin}, tokenSecret, {expiresIn:'1h'} );
     
     return res.json({token});

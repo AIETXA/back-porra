@@ -16,8 +16,6 @@ const misPorras = await prisma.porra.findMany({
   }
 });
 
-
-
 const ranking = await prisma.porra.findMany({
   orderBy: { puntosTotales: 'desc' },
   select: { id: true, nombre: true, puntosTotales: true, ranking: true }

@@ -18,8 +18,8 @@ async function obtenerPorra(req, res) {
         res.json(porras)
 
     } catch (error) {
-        console.error('No se pudo obtener la lista', error)
-        return res.status(500).send({message:'Error al intentar obtener la lista'})
+        console.error('No se pudo obtener la porra', error)
+        return res.status(500).send({message:'Error al intentar obtener la porra'})
     }
     
 };
@@ -41,8 +41,8 @@ async function obtenerTodasLasPorras(req, res) {
         res.json(porras)
 
     } catch (error) {
-        console.error('No se pueden obtener las listas', error)
-        return res.status(500).send({message:'Error al intentar obtener las listas'})
+        console.error('No se puede obtener la lista de las porras', error)
+        return res.status(500).send({message:'Error al intentar obtener la lista de las porras'})
     }
 }
 
