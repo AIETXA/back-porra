@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors')
+const PORT = process.env.PORT || 3000;
 const dotenv = require('dotenv');
 const loginAdminRoute = require('./routes/loginAdminRoute')
 const adminPanelRoute = require('./routes/adminPanelRoute')
@@ -12,7 +13,6 @@ const etapasAdminRoute = require('./routes/etapasAdminRoute');
 const etapasPublicRoute = require('./routes/publicRoutes')
 
 dotenv.config()
-const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   origin: ['https://front-porra.netlify.app', 'http://localhost:5173' ],
