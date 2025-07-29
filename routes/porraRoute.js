@@ -6,7 +6,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 
 router.get('/',authMiddleware, porraController.obtenerPorra);
-router.get('/ranking', authMiddleware, obtenerRankingPorra);
+router.get('/ranking', authMiddleware,obtenerRankingPorra);
 router.post('/',authMiddleware, porraController.crearPorra);
 
 
