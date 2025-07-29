@@ -19,7 +19,4 @@ const obtenerRankingPorra = async (req, res) => {
   }
 };
 
-module.exports = {
-  obtenerRankingPorra,
-  
-}
+module.exports = {obtenerRankingPorra}

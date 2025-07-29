@@ -6,7 +6,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 const userController = require('../controllers/authUserController')
 const {dashboardUser} = require('../controllers/dashboardUser');
 const JWT_SECRET = process.env.JWT_SECRET;
-
+const {obtenerRankingPorra} = require('../controllers/rankingPorras')
 
 router.get('/auth/:token', async (req, res) => {
     const { token } = req.params;
@@ -45,12 +45,11 @@ router.get('/porras/me', authMiddleware, async (req, res) => {
     try {
         const porras = await prisma.porra.findMany({
             where: { userId: req.user.userId },
-            include: { 
-                corredores: true,
-                etapas: true,
-                resultados: true,
-                ranking: true,
-             }
+                include: {
+                    corredores: { 
+                        include: {
+                            corredor: true }
+                   }   } 
         });
         res.json({ porras });
     } catch (error) {
@@ -63,10 +62,7 @@ router.get('/etapas', async (req, res) => {
   res.json({ etapas });
 });
 
-router.get('/ranking', async (req, res) => {
-  const ranking = await calcularRanking();
-  res.json({ ranking });
-});
+router.get('/ranking', obtenerRankingPorra);
 
 router.get('/dashboard', authMiddleware, dashboardUser)
 
