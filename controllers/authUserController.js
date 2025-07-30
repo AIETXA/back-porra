@@ -20,7 +20,7 @@ async function login(req,res) {
         
     }
 
-    const token = crypto.randomBytes(20).toString("hex")
+    const token = '123456';  //crypto.randomBytes(20).toString("hex")
 
     await prisma.token.create({
         data: {
