@@ -26,7 +26,7 @@ async function login(req,res) {
         data: {
             token,
             userId: user.id,
-            expiracion: new Date(Date.now() + 1000 *60 *10), //10min
+            //expiracion: new Date(Date.now() + 1000 *60 *10), //10min
         }
     });
 

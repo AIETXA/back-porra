@@ -21,10 +21,7 @@ router.get('/auth/:token', async (req, res) => {
             
             return res.status(400).json({message:'Token inválido'});
         }
-        if(tokenOk.expiracion < new Date()) {
-            
-            return res.status(400).json({message:'Token vencido'});
-        }
+        //if(tokenOk.expiracion < new Date()) {return res.status(400).json({message:'Token vencido'});}
         
         const datos= {userId: tokenOk.user.id, email: tokenOk.user.email};
         const jwtToken = jwt.sign(datos, JWT_SECRET, {expiresIn: '30d'});
