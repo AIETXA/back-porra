@@ -1,6 +1,6 @@
 const prisma = require('../config/prismaBBDD')
 const { enviarEmail } = require('../services/mailer')
-const crypto = require('crypto')
+//const crypto = require('crypto')
 
 
 async function login(req,res) {
