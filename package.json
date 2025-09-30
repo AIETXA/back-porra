@@ -3,19 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch app.js"
+    "start": "node --watch app.js",
+    "dev": "dotenv -e .env.development node --watch app.js",
+    "prod": "dotenv -e .env.production node app.js",
+    "test": "dotenv -e .env.test node --watch app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "dotenv-cli": "^10.0.0",
     "prisma": "^6.11.1"
   },
   "dependencies": {
     "@prisma/client": "^6.11.1",
     "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "csv-parser": "^3.2.0",
     "dotenv": "^17.2.0",
