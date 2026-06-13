@@ -6,7 +6,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.use(authMiddleware)
 
-router.post('/',  crearEtapa)
+router.post('/', crearEtapa)
 
 router.post('/:id/procesar', procesarEtapa )
 router.get('/', obtenerTodasLasEtapas)
