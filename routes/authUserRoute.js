@@ -65,5 +65,41 @@ router.get('/dashboard', authMiddleware, dashboardUser)
 
 router.post('/login', userController.login)
 
+router.post('/login-demo', async (req, res) => {
+    try {
+       
+        let demoUser = await prisma.user.findUnique({
+            where: { email: 'invitado@porra.com' }
+        });
+
+       
+        if (!demoUser) {
+            demoUser = await prisma.user.create({
+                data: {
+                    email: 'invitado@porra.com',
+                    name: 'Visitante',
+                    lastname: 'CV',
+                    phone: '000000'
+                }
+            });
+        }
+
+       
+        const datosDemo = { userId: demoUser.id, email: demoUser.email };
+      
+        const jwtToken = jwt.sign(datosDemo, JWT_SECRET || 'firma_secreta_local', { expiresIn: '30d' });
+
+   
+        return res.status(200).json({
+            message: 'Acceso demo exitoso',
+            token: jwtToken
+        });
+
+    } catch (error) {
+        console.error("Error crítico en login-demo:", error);
+        return res.status(500).json({ message: 'Error al procesar el modo demo en el servidor' });
+    }
+});
+
 
 module.exports = router

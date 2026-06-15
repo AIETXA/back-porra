@@ -15,6 +15,7 @@ async function login(req,res) {
                 name: '',
                 lastname: '',
                 phone: '',
+                password: 'magic_link_user'
             }
         });
         
@@ -36,13 +37,23 @@ async function login(req,res) {
         <p>¡Hola! Hace click en el siguiente enlace para acceder:</p>
         <p><a href="${loginLink}">${loginLink}</a></p>
         <p>El enlace expirará en 10 minuto</p>`;
-
-    await enviarEmail(email, subject, html);
-        return res.status(200).json({message:' Enlace enviado correctamente'})
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({message: 'No se pudo enviar el enlace'})
+    
+    try {
+        await enviarEmail(email, subject, html);
+    } catch (mailError) {
+        console.log('Resend fallo')
     }
+    
+    return res.status(200).json({
+        message: 'Enlace generado (Modo desarrollo)',
+        developmentLink: loginLink
+    });
+
+    } catch (error) {
+    console.error(error)
+    res.status(500).json({message: 'No se pudo enviar el enlace'})
+}
+
 }
 
 module.exports = {login};
